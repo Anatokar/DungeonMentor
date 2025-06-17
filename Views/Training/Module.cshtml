@@ -1,20 +1,14 @@
-﻿@model DungeonMentor.Models.TrainingModule
-
-@{
-    ViewData["Title"] = @Model.Title;
+﻿@{
+    ViewData["Title"] = "Модуль обучения";
+    var moduleName = ViewData["ModuleName"] as string;
 }
 
-<h1>@Model.Title</h1>
-<p>@Model.Description</p>
+<h2>@moduleName</h2>
 
-<h2>Уроки</h2>
-<ol>
-    @foreach (var lesson in Model.Lessons)
-    {
-        <li>@lesson</li>
-    }
-</ol>
+<p>Описание и материалы модуля "@moduleName"...</p>
 
-<a href="/Training">← Назад ко всем модулям</a>
-
-<a href="/Training/Quiz/@Model.Id">Пройти тест по модулю</a>
+<form asp-action="Complete" method="post">
+    <input type="hidden" name="moduleName" value="@moduleName" />
+    <input type="hidden" name="score" value="100" /> <!-- временный балл -->
+    <button type="submit" class="btn btn-success">Завершить модуль</button>
+</form>

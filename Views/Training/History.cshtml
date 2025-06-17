@@ -1,0 +1,26 @@
+﻿@model List<DungeonMentor.Models.TrainingResult>
+@{
+    ViewData["Title"] = "История обучения";
+}
+
+<h2>История прохождений</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Модуль</th>
+            <th>Оценка</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.ModuleName</td>
+                <td>@r.Score</td>
+                <td>@r.PassedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

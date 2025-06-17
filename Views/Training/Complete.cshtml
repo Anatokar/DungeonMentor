@@ -1,0 +1,17 @@
+﻿@model DungeonMentor.Models.TrainingResult
+
+@{
+    ViewData["Title"] = "Модуль завершён";
+}
+
+<h1>Обучение завершено</h1>
+
+<div class="alert alert-success">
+    <strong>Поздравляем!</strong> Вы успешно завершили модуль <strong>@Model.ModuleName</strong>.
+</div>
+
+<p><strong>Оценка:</strong> @Model.Score / 100</p>
+<p><strong>Дата прохождения:</strong> @Model.PassedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</p>
+
+<a class="btn btn-primary" asp-action="Index">Назад к обучению</a>
+<a class="btn btn-secondary" asp-action="History">Моя история</a>

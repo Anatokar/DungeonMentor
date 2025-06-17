@@ -1,17 +1,15 @@
-﻿@model List<DungeonMentor.Models.TrainingModule>
-
+﻿@model List<string>
 @{
-    ViewData["Title"] = "Обучающие модули";
+    ViewData["Title"] = "Обучение";
 }
 
-<h1>Обучающие модули</h1>
+<h2>Доступные модули</h2>
 
-@foreach (var module in Model)
-{
-    <div>
-        <h2>@module.Title</h2>
-        <p>@module.Description</p>
-        <a href="/Training/Module/@module.Id">Перейти к модулю</a>
-    </div>
-    <hr />
-}
+<ul>
+    @foreach (var module in Model)
+    {
+        <li>
+            <a asp-action="Module" asp-route-name="@module">@module</a>
+        </li>
+    }
+</ul>

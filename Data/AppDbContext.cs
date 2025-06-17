@@ -12,5 +12,8 @@ namespace DungeonMentor.Data
         }
 
         public DbSet<UserProgress> UserProgress { get; set; }
+
+        public DbSet<TrainingResult> TrainingResults { get; set; }
+
     }
 }
