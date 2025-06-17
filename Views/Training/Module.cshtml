@@ -1,14 +1,64 @@
 ﻿@{
-    ViewData["Title"] = "Модуль обучения";
-    var moduleName = ViewData["ModuleName"] as string;
+    ViewData["Title"] = ViewData["ModuleName"];
+    var module = ViewData["ModuleName"]?.ToString();
+    var content = ViewData["Content"]?.ToString();
 }
 
-<h2>@moduleName</h2>
+<h1>@module</h1>
 
-<p>Описание и материалы модуля "@moduleName"...</p>
+<div class="mb-4">
+    <p>@content</p>
+</div>
 
-<form asp-action="Complete" method="post">
-    <input type="hidden" name="moduleName" value="@moduleName" />
-    <input type="hidden" name="score" value="100" /> <!-- временный балл -->
-    <button type="submit" class="btn btn-success">Завершить модуль</button>
-</form>
+@if (!ViewData["ShowTest"]?.Equals(true) ?? true)
+{
+    <form method="get" asp-controller="Training" asp-action="Module">
+        <input type="hidden" name="name" value="@module" />
+        <input type="hidden" name="showTest" value="true" />
+        <button class="btn btn-primary">Начать тест</button>
+    </form>
+}
+else
+{
+    <h4>Тест по модулю</h4>
+    <form method="post" asp-action="Complete">
+        <input type="hidden" name="moduleName" value="@module" />
+
+        <div class="mb-3">
+            <label>1. Что такое DnD?</label><br />
+            <input type="radio" name="q1" value="1" /> Карточная игра<br />
+            <input type="radio" name="q1" value="2" /> Настольная ролевая игра<br />
+            <input type="radio" name="q1" value="3" /> Компьютерный шутер<br />
+        </div>
+
+        <div class="mb-3">
+            <label>2. Что означает «инициатива» в бою?</label><br />
+            <input type="radio" name="q2" value="1" /> Количество здоровья<br />
+            <input type="radio" name="q2" value="2" /> Очередность хода<br />
+            <input type="radio" name="q2" value="3" /> Сила заклинания<br />
+        </div>
+
+        <div class="mb-3">
+            <label>3. Что делает класс персонажа?</label><br />
+            <input type="radio" name="q3" value="1" /> Изменяет внешность<br />
+            <input type="radio" name="q3" value="2" /> Определяет способности и стиль игры<br />
+            <input type="radio" name="q3" value="3" /> Даёт больше золота<br />
+        </div>
+
+        <input type="hidden" name="score" id="scoreInput" value="0" />
+
+        <button type="submit" class="btn btn-success" onclick="return calculateScore()">Завершить модуль</button>
+    </form>
+
+    <script>
+        function calculateScore() {
+            let score = 0;
+            if (document.querySelector('input[name="q1"]:checked')?.value === "2") score += 33;
+            if (document.querySelector('input[name="q2"]:checked')?.value === "2") score += 33;
+            if (document.querySelector('input[name="q3"]:checked')?.value === "2") score += 34;
+
+            document.getElementById("scoreInput").value = score;
+            return true;
+        }
+    </script>
+}

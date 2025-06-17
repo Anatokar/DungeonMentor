@@ -24,11 +24,23 @@ namespace DungeonMentor.Controllers
         }
 
         // Страница модуля
-        public IActionResult Module(string name)
+        public IActionResult Module(string name, bool showTest = false)
         {
             ViewData["ModuleName"] = name;
+            ViewData["ShowTest"] = showTest;
+
+            string content = name switch
+            {
+                "Основы DnD" => "Dungeons & Dragons (DnD) — это настольная ролевая игра, в которой игроки берут на себя роли персонажей и совместно создают воображаемые приключения под руководством Ведущего.",
+                "Боевая система" => "Боевая система в DnD основана на инициативах, бросках кубиков и действиях. Персонажи и монстры по очереди совершают действия: атака, заклинание, перемещение и т.д.",
+                "Классы и расы" => "Каждый персонаж в DnD принадлежит к расе (человек, эльф, дворф) и классу (воин, маг, плут и др.). Класс определяет стиль игры, способности и роль в команде.",
+                _ => "Модуль не найден."
+            };
+
+            ViewData["Content"] = content;
             return View();
         }
+
 
         // Завершение модуля
         [HttpPost]
