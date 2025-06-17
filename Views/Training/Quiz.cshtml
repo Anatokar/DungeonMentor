@@ -1,0 +1,27 @@
+﻿@model DungeonMentor.Models.TrainingModule
+
+@{
+    ViewData["Title"] = "Тест по модулю: " + Model.Title;
+}
+
+<h1>Тест: @Model.Title</h1>
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    @for (int i = 0; i < Model.Quiz.Count; i++)
+    {
+        <div>
+            <p><strong>@(i + 1). @Model.Quiz[i].Text</strong></p>
+            @for (int j = 0; j < Model.Quiz[i].Options.Count; j++)
+            {
+                <div>
+                    <input type="radio" name="answers[@i]" value="@j" required />
+                    <label>@Model.Quiz[i].Options[j]</label>
+                </div>
+            }
+        </div>
+        <hr />
+    }
+
+    <button type="submit">Отправить ответы</button>
+</form>

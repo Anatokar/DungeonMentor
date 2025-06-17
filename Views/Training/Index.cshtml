@@ -4,14 +4,14 @@
     ViewData["Title"] = "Обучающие модули";
 }
 
-<h1>Обучение D&D</h1>
-<ul>
-    @foreach (var module in Model)
-    {
-        <li>
-            <h3>@module.Title</h3>
-            <p>@module.Description</p>
-            <a href="/Training/Module/@module.Id">Открыть</a>
-        </li>
-    }
-</ul>
+<h1>Обучающие модули</h1>
+
+@foreach (var module in Model)
+{
+    <div>
+        <h2>@module.Title</h2>
+        <p>@module.Description</p>
+        <a href="/Training/Module/@module.Id">Перейти к модулю</a>
+    </div>
+    <hr />
+}
