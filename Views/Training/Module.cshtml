@@ -1,0 +1,18 @@
+﻿@model DungeonMentor.Models.TrainingModule
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<h1>@Model.Title</h1>
+<p>@Model.Description</p>
+
+<h2>Уроки</h2>
+<ol>
+    @foreach (var lesson in Model.Lessons)
+    {
+        <li>@lesson</li>
+    }
+</ol>
+
+<a href="/Training">← Назад ко всем модулям</a>

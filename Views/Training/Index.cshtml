@@ -1,0 +1,17 @@
+﻿@model List<DungeonMentor.Models.TrainingModule>
+
+@{
+    ViewData["Title"] = "Обучающие модули";
+}
+
+<h1>Обучение D&D</h1>
+<ul>
+    @foreach (var module in Model)
+    {
+        <li>
+            <h3>@module.Title</h3>
+            <p>@module.Description</p>
+            <a href="/Training/Module/@module.Id">Открыть</a>
+        </li>
+    }
+</ul>

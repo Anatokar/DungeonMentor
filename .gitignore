@@ -1,0 +1,70 @@
+## === .gitignore для C# / ASP.NET / Visual Studio ===
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build Results
+bin/
+obj/
+[Bb]uild/
+[Ll]ogs/
+*.log
+
+# Rider/JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+App_Data/
+
+# Publish
+*.publish.xml
+*.pubxml
+*.PublishSettings
+
+# DotCover
+*.dotCover
+
+wwwroot/lib/
+
+# VS Code
+.vscode/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Backup & temporary
+*.tmp
+*.bak
+*.old
+*.orig
+*.cache
+
+# User secrets (если используешь)
+secrets.json
+
+# Тестовые результаты
+TestResults/
+
+# local.env или другие файлы с чувствительной информацией
+*.env
+.env.*
