@@ -1,0 +1,20 @@
+﻿@model DungeonMentor.Controllers.CharacterViewModel
+
+@{
+    ViewData["Title"] = "Генератор персонажа";
+}
+
+<h1>Генератор персонажа</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Раса:</strong> @Model.Race</p>
+        <p><strong>Класс:</strong> @Model.Class</p>
+        <p><strong>Пол:</strong> @Model.Gender</p>
+        <p>@Model.Description</p>
+    </div>
+</div>
+
+<form method="post" asp-action="Generate">
+    <button type="submit" class="btn btn-primary">Сгенерировать заново</button>
+</form>
