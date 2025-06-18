@@ -4,24 +4,33 @@
     ViewData["Title"] = "Тест по модулю: " + Model.Title;
 }
 
-<h1>Тест: @Model.Title</h1>
+<div class="container mt-4">
+    <h1>Тест: @Model.Title</h1>
 
-<form method="post">
-    <input type="hidden" name="id" value="@Model.Id" />
-    @for (int i = 0; i < Model.Quiz.Count; i++)
-    {
-        <div>
-            <p><strong>@(i + 1). @Model.Quiz[i].Text</strong></p>
-            @for (int j = 0; j < Model.Quiz[i].Options.Count; j++)
-            {
-                <div>
-                    <input type="radio" name="answers[@i]" value="@j" required />
-                    <label>@Model.Quiz[i].Options[j]</label>
+    <form method="post" asp-action="Quiz" asp-route-id="@Model.Id" class="mt-4">
+        @for (int i = 0; i < Model.Quiz.Count; i++)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@(i + 1). @Model.Quiz[i].Text</h5>
+
+                    @for (int j = 0; j < Model.Quiz[i].Options.Count; j++)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                                   name="answers[@i]" value="@j" id="q@(i)_@j" required>
+                            <label class="form-check-label" for="q@(i)_@j">
+                                @Model.Quiz[i].Options[j]
+                            </label>
+                        </div>
+                    }
                 </div>
-            }
-        </div>
-        <hr />
-    }
+            </div>
+        }
 
-    <button type="submit">Отправить ответы</button>
-</form>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Завершить тест</button>
+            <a href="/Training/Module/@Model.Title" class="btn btn-secondary">Назад к модулю</a>
+        </div>
+    </form>
+</div>

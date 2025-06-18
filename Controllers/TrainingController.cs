@@ -16,58 +16,77 @@ namespace DungeonMentor.Controllers
             _context = context;
         }
 
-        // Показ доступных модулей
         public IActionResult Index()
         {
-            var modules = new List<string> { "Основы DnD", "Боевая система", "Классы и расы" };
-            return View(modules);
+            var modules = TrainingModule.GetModules();
+            return View(modules.Select(m => m.Title).ToList());
         }
 
-        // Страница модуля
-        public IActionResult Module(string name, bool showTest = false)
+        public IActionResult Module(string name)
         {
-            ViewData["ModuleName"] = name;
-            ViewData["ShowTest"] = showTest;
+            var module = TrainingModule.GetModules().FirstOrDefault(m => m.Title == name);
+            if (module == null) return NotFound();
 
-            string content = name switch
-            {
-                "Основы DnD" => "Dungeons & Dragons (DnD) — это настольная ролевая игра, в которой игроки берут на себя роли персонажей и совместно создают воображаемые приключения под руководством Ведущего.",
-                "Боевая система" => "Боевая система в DnD основана на инициативах, бросках кубиков и действиях. Персонажи и монстры по очереди совершают действия: атака, заклинание, перемещение и т.д.",
-                "Классы и расы" => "Каждый персонаж в DnD принадлежит к расе (человек, эльф, дворф) и классу (воин, маг, плут и др.). Класс определяет стиль игры, способности и роль в команде.",
-                _ => "Модуль не найден."
-            };
+            ViewData["ModuleName"] = module.Title;
+            ViewData["Content"] = module.Description;
+            ViewData["ModuleId"] = module.Id;
 
-            ViewData["Content"] = content;
             return View();
         }
 
-
-        // Завершение модуля
-        [HttpPost]
-        public async Task<IActionResult> Complete(string moduleName, int score)
+        [HttpGet]
+        public IActionResult Quiz(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var module = TrainingModule.GetModules().FirstOrDefault(m => m.Id == id);
+            if (module == null) return NotFound();
 
+            ViewBag.ModuleId = module.Id; // Передаем ID модуля в представление
+            return View(module);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Quiz(int id, Dictionary<int, int> answers)
+        {
+            var module = TrainingModule.GetModules().FirstOrDefault(m => m.Id == id);
+            if (module == null) return NotFound();
+
+            int correct = 0;
+            for (int i = 0; i < module.Quiz.Count; i++)
+            {
+                if (answers.ContainsKey(i) && answers[i] == module.Quiz[i].CorrectIndex)
+                {
+                    correct++;
+                }
+            }
+
+            double score = (correct * 100.0) / module.Quiz.Count;
+            var roundedScore = (int)Math.Round(score);
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = new TrainingResult
             {
                 UserId = userId,
-                ModuleName = moduleName,
-                Score = score,
+                ModuleName = module.Title,
+                Score = roundedScore,
                 PassedAt = DateTime.UtcNow
             };
 
             _context.TrainingResults.Add(result);
             await _context.SaveChangesAsync();
 
-            return View("Complete", result); // Отображаем Complete.cshtml с моделью
+            ViewBag.Score = roundedScore;
+            ViewBag.Correct = correct;
+            ViewBag.Total = module.Quiz.Count;
+            ViewBag.Passed = roundedScore >= 80;
+            ViewBag.ModuleName = module.Title;
+            ViewBag.ModuleId = module.Id; // Добавляем передачу ID модуля
+
+            return View("QuizResult");
         }
 
-
-        // История обучения пользователя
         public IActionResult History()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var myResults = _context.TrainingResults
                 .Where(r => r.UserId == userId)
                 .OrderByDescending(r => r.PassedAt)
