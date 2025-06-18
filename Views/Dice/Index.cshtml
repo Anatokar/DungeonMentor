@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Бросок костей";
+    var diceTypes = ViewBag.DiceTypes as IEnumerable<string>;
+    var selectedDice = ViewBag.SelectedDice as string;
+    var quantity = ViewBag.Quantity as int? ?? 1;
+    var rolls = ViewBag.Rolls as List<int>;
+    var total = ViewBag.Total as int?;
+}
+
+<h1>Бросок костей</h1>
+
+<form asp-action="Roll" method="post">
+    <div class="form-group">
+        <label for="diceType">Выберите тип кости:</label>
+        <select id="diceType" name="diceType" class="form-control" required>
+            @foreach (var dice in diceTypes)
+            {
+                if (dice == selectedDice)
+                {
+                    <option value="@dice" selected="selected">@dice</option>
+                }
+                else
+                {
+                    <option value="@dice">@dice</option>
+                }
+            }
+        </select>
+
+    </div>
+    <div class="form-group mt-3">
+        <label for="quantity">Количество бросков (1-100):</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="100" value="@quantity" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Бросить</button>
+</form>
+
+@if (rolls != null)
+{
+    <h3 class="mt-4">Результаты бросков:</h3>
+    <p>Тип кости: <strong>@selectedDice</strong></p>
+    <p>Количество бросков: <strong>@quantity</strong></p>
+    <p>Броски: <strong>@string.Join(", ", rolls)</strong></p>
+    <p>Сумма: <strong>@total</strong></p>
+}
