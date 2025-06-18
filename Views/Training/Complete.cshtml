@@ -2,13 +2,24 @@
 
 @{
     ViewData["Title"] = "Модуль завершён";
+    var passed = Model.Score >= 80; // можно изменить порог
 }
 
 <h1>Обучение завершено</h1>
 
-<div class="alert alert-success">
-    <strong>Поздравляем!</strong> Вы успешно завершили модуль <strong>@Model.ModuleName</strong>.
-</div>
+@if (passed)
+{
+    <div class="alert alert-success">
+        <strong>Поздравляем!</strong> Вы успешно завершили модуль <strong>@Model.ModuleName</strong>.
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <strong>К сожалению, вы не прошли модуль <strong>@Model.ModuleName</strong>.</strong><br />
+        Попробуйте ещё раз, изучив материалы внимательнее.
+    </div>
+}
 
 <p><strong>Оценка:</strong> @Model.Score / 100</p>
 <p><strong>Дата прохождения:</strong> @Model.PassedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</p>
