@@ -1,48 +1,323 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿/* _Layout.cshtml.css */
+:root {
+    --dnd-red: #8b0000;
+    --dnd-gold: #daa520;
+    --dnd-dark: #1a1a1a;
+    --dnd-parchment: #f5f5dc;
+    --dnd-blue: #1e3a8a;
+    --dnd-green: #2e7d32;
 }
 
-a {
-  color: #0077cc;
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+    background-attachment: fixed;
+}
+
+/* Header styles */
+header {
+    background-color: white !important; /* Меняем на светлый фон */
+    border-bottom: 1px solid #e5e5e5 !important; /* Серая граница вместо золотой */
+}
+
+.navbar-brand {
+    color: var(--dnd-dark) !important; /* Темный цвет для логотипа */
+    text-shadow: none;
+}
+
+.nav-link {
+    color: var(--dnd-dark) !important; /* Темный цвет для всех ссылок */
+    font-weight: normal !important; /* Обычное начертание */
+    margin: 0 5px;
+    transition: none !important; /* Убираем все анимации */
+}
+
+    .nav-link:hover {
+        color: var(--dnd-red) !important; /* Красный при наведении */
+        transform: none !important; /* Убираем смещение */
+    }
+
+/* Специально для вкладок "Обучение" и "История" */
+.navbar-nav li.nav-item a[href="/Training"],
+.navbar-nav li.nav-item a[href="/Training/History"] {
+    color: var(--dnd-dark) !important;
+}
+
+/* Активная вкладка */
+.nav-pills .nav-link.active {
+    color: var(--dnd-red) !important;
+    background-color: transparent !important;
+    font-weight: normal !important;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    background-color: var(--dnd-red);
+    border-color: var(--dnd-red);
+    color: white;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    .btn-primary:hover {
+        background-color: #6d0000;
+        border-color: #6d0000;
+    }
+
+.btn-secondary {
+    background-color: var(--dnd-dark);
+    border-color: var(--dnd-dark);
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    .btn-secondary:hover {
+        background-color: #333;
+        border-color: #333;
+    }
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    background-color: white;
+    margin-bottom: 1.5rem;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+.card-body {
+    padding: 1.5rem;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Times New Roman', serif;
+    color: var(--dnd-dark);
+    margin-bottom: 1rem;
 }
 
+h1 {
+    border-bottom: 2px solid var(--dnd-gold);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
+}
+
+    .form-control:focus {
+        border-color: var(--dnd-gold);
+        box-shadow: 0 0 0 0.2rem rgba(218, 165, 32, 0.25);
+    }
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        background-color: var(--dnd-dark);
+        color: white;
+    }
+
+    .table tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+
+/* Character Generator Styles */
+.character-card {
+    background-color: var(--dnd-parchment);
+    border: 2px solid var(--dnd-gold);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    .character-card p {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .character-card strong {
+        color: var(--dnd-red);
+    }
+
+/* Dice Roller Styles */
+.dice-results {
+    background-color: var(--dnd-parchment);
+    border: 2px solid var(--dnd-gold);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+    .dice-results p {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+/* Mini Scenario Styles */
+.mini-scenario {
+    background-color: var(--dnd-parchment);
+    border: 2px solid var(--dnd-gold);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+    .mini-scenario p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .mini-scenario input[type="text"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid var(--dnd-gold);
+        border-radius: 0.25rem;
+    }
+
+/* Training Module Styles */
+.module-card {
+    background-color: var(--dnd-parchment);
+    border: 2px solid var(--dnd-gold);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+    .module-card h5 {
+        color: var(--dnd-red);
+        margin-bottom: 1rem;
+    }
+
+.form-check-input:checked {
+    background-color: var(--dnd-red);
+    border-color: var(--dnd-red);
+}
+
+/* Footer Styles */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    background-color: var(--dnd-dark);
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+    .footer a {
+        color: var(--dnd-gold);
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem 0;
+    }
+
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Убираем анимацию только для этих пунктов меню */
+.navbar-nav li.nav-item a[href="/Training"],
+.navbar-nav li.nav-item a[href="/Training/History"] {
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Остальные стили остаются без изменений */
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    margin: 0 5px;
+    /* Убираем transition отсюда, чтобы он не применялся ко всем ссылкам */
+}
+
+    .nav-link:hover {
+        color: var(--dnd-gold) !important;
+        /* Убираем transform для всех ссылок при наведении */
+    }
+
+/* Стили для правой части навигации (логин/логаут) */
+.navbar-nav .nav-item .nav-link.text-dark,
+.navbar-nav .nav-item .btn-link.text-dark {
+    color: var(--dnd-dark) !important; /* Черный цвет текста */
+    font-weight: normal !important; /* Обычное начертание */
+    padding: 8px 12px; /* Стандартные отступы */
+    text-decoration: none !important; /* Убираем подчеркивание */
+    transition: none !important; /* Убираем анимации */
+    background: none !important; /* Убираем фон */
+    border: none !important; /* Убираем границы */
+    cursor: pointer; /* Курсор-указатель */
+}
+
+    /* Стиль при наведении */
+    .navbar-nav .nav-item .nav-link.text-dark:hover,
+    .navbar-nav .nav-item .btn-link.text-dark:hover {
+        color: var(--dnd-red) !important; /* Красный при наведении */
+        transform: none !important; /* Без смещения */
+        text-decoration: none !important; /* Подчеркивание не появляется */
+    }
+
+/* Специально для текста приветствия */
+.navbar-nav .nav-item span.nav-link.text-dark {
+    display: inline-block;
+    padding: 8px 12px;
+    color: var(--dnd-dark) !important;
+    font-weight: normal;
+}
+
+/* Стиль для кнопки "Выйти" */
+.navbar-nav .nav-item form#logoutForm .btn-link {
+    color: var(--dnd-dark) !important;
+    font-weight: normal;
+    padding: 8px 12px;
+    margin: 0;
 }
