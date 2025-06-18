@@ -15,5 +15,8 @@ namespace DungeonMentor.Data
 
         public DbSet<TrainingResult> TrainingResults { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
+
     }
 }

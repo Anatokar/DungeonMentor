@@ -1,0 +1,15 @@
+﻿@model List<string>
+
+<h2>Мини-сценарий</h2>
+
+<div>
+    @foreach (var msg in Model)
+    {
+        <p>@msg</p>
+    }
+</div>
+
+<form asp-action="SendMessage" method="post">
+    <input type="text" name="userMessage" required />
+    <button type="submit">Отправить</button>
+</form>
